@@ -32,6 +32,79 @@ jobs:
           server-username: NEXUS_USERNAME
           server-password: NEXUS_PASSWORD
 
+
+
+      - name: Generate Maven settings.xml (use Nexus for downloading + deploying)
+        run: |
+          mkdir -p ~/.m2
+          cat > ~/.m2/settings.xml << 'EOF'
+          <settings>
+            <mirrors>
+              <mirror>
+                <id>nexus-mirror</id>
+                <mirrorOf>*</mirrorOf>
+                <url>https://nexus.lll44556.top/repository/maven-public/</url>
+              </mirror>
+            </mirrors>
+          
+            <servers>
+              <server>
+                <id>nexus</id>
+                <username>${env.NEXUS_USERNAME}</username>
+                <password>${env.NEXUS_PASSWORD}</password>
+              </server>
+            </servers>
+          
+            <profiles>
+              <profile>
+                <id>use-nexus</id>
+                <repositories>
+                  <repository>
+                    <id>nexus-public</id>
+                    <url>https://nexus.lll44556.top/repository/maven-public/</url>
+                    <releases><enabled>true</enabled></releases>
+                    <snapshots><enabled>true</enabled></snapshots>
+                  </repository>
+                </repositories>
+                <pluginRepositories>
+                  <pluginRepository>
+                    <id>nexus-public</id>
+                    <url>https://nexus.lll44556.top/repository/maven-public/</url>
+                    <releases><enabled>true</enabled></releases>
+                    <snapshots><enabled>true</enabled></snapshots>
+                  </pluginRepository>
+                </pluginRepositories>
+              </profile>
+            </profiles>
+          
+            <activeProfiles>
+              <activeProfile>use-nexus</activeProfile>
+            </activeProfiles>
+          </settings>
+          EOF
+        env:
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+
+      - name: Build & Deploy to Nexus
+        run: mvn -B -ntp -DskipTests clean deploy
+        env:
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       - name: Build & Deploy to Nexus
         env:
           NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
