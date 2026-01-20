@@ -41,8 +41,16 @@ jobs:
           sed -E 's#(<password>).*?(</password>)#\1***\2#g' ~/.m2/settings.xml
           echo "===== mirrors ====="
           grep -n "<mirrors>" -n ~/.m2/settings.xml -n || true    
-      
 
+      - name: Debug fetch parent
+        run: |
+          mvn -B -ntp -U -e -X dependency:get \
+            -Dartifact=top.lll44556:lll:pom:0.0.1-SNAPSHOT
+    
+    
+    
+    
+    
       - name: Build & Deploy to Nexus
         run: mvn -B -ntp -U -DskipTests clean deploy
         env:
