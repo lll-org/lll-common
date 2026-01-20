@@ -28,7 +28,7 @@ jobs:
           cache: 'maven'
 
       - name: Generate Maven settings.xml
-        uses: lll-org/lll-actions/.github/actions/maven-nexus-settings@v2
+        uses: lll-org/lll-actions/.github/actions/maven-nexus-settings@v3
         with:
           nexus_mirror_url: ${{ secrets.NEXUS_MIRROR_URL }}
           server_id: nexus
