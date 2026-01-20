@@ -35,24 +35,6 @@ jobs:
           nexus_username: ${{ secrets.NEXUS_USERNAME }}
           nexus_password: ${{ secrets.NEXUS_PASSWORD }}
 
-#      - name: Show generated settings.xml (redacted)
-#        run: |
-#          echo "===== ~/.m2/settings.xml ====="
-#          sed -E 's#(<password>).*?(</password>)#\1***\2#g' ~/.m2/settings.xml
-#          echo "===== mirrors ====="
-#          grep -n "<mirrors>" -n ~/.m2/settings.xml -n || true
-#
-#      - name: Debug fetch parent
-#        run: |
-#          mkdir -p /tmp/mvn-empty
-#          cd /tmp/mvn-empty
-#          mvn -B -ntp -U -e -X org.apache.maven.plugins:maven-dependency-plugin:3.6.1:get \
-#            -Dartifact=top.lll44556:lll:pom:0.0.1-SNAPSHOT
-
-    
-    
-    
-    
     
       - name: Build & Deploy to Nexus
         run: mvn -B -ntp -U -DskipTests clean deploy
