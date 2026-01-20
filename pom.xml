@@ -5,7 +5,7 @@
         <groupId>top.lll44556</groupId>
         <artifactId>lll</artifactId>
         <version>0.0.1-SNAPSHOT</version>
-        <relativePath/>
+<!--        <relativePath/>-->
     </parent>
 
     <artifactId>lll-common</artifactId>
