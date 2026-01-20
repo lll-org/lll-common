@@ -44,8 +44,11 @@ jobs:
 
       - name: Debug fetch parent
         run: |
-          mvn -B -ntp -U -e -X dependency:get \
+          mkdir -p /tmp/mvn-empty
+          cd /tmp/mvn-empty
+          mvn -B -ntp -U -e -X org.apache.maven.plugins:maven-dependency-plugin:3.6.1:get \
             -Dartifact=top.lll44556:lll:pom:0.0.1-SNAPSHOT
+
     
     
     
